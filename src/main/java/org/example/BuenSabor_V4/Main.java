@@ -5,6 +5,7 @@ import org.example.BuenSabor_V4.Entities.Enums.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -271,19 +272,50 @@ public class Main {
         // Sucursal a Promoción
         sucursal1.agregarPromocion(promocion);
 
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Bienvenido al Buen Sabor");
+
+        System.out.println("Existe la empresa:\n");
 
         System.out.println(empresa);
-        System.out.println(sucursal1);
-        System.out.println(domicilio1);
-        System.out.println(localidad1);
-        System.out.println(provincia1);
-        System.out.println(pais);
-        System.out.println(categoriaPadre);
-        System.out.println(insumo1);
-        System.out.println(manufacturado1);
-        System.out.println(cliente);
-        System.out.println(pedido);
-        System.out.println(factura);
-        System.out.println(promocion);
+
+        System.out.println("Quieres mostrar mas datos de esta empresa? 1=si / cualquier tecla para no");
+        String primeraP = sc.nextLine();
+
+        if (primeraP.equals("1")) {
+            System.out.println(sucursal1);
+            System.out.println(domicilio1);
+            System.out.println(localidad1);
+            System.out.println(provincia1);
+            System.out.println(pais);
+        }
+
+        System.out.println("Quieres mostrar la categorias e insumos? 1=si / cualquier tecla para no");
+        String segundaP = sc.nextLine();
+
+        if (segundaP.equals("1")) {
+            System.out.println(categoriaPadre);
+            System.out.println(insumo1);
+            System.out.println(manufacturado1);
+        }
+
+        System.out.println("Quieres ver las promociones? 1=si / cualquier tecla para no");
+        String terceraP = sc.nextLine();
+
+        if (terceraP.equals("1")) {
+            System.out.println(promocion);
+        }
+
+        System.out.println("Quieres hacer un pedido? 1=si / cualquier tecla para no");
+        String cuartaP = sc.nextLine();
+
+        if (cuartaP.equals("1")) {
+            System.out.println(cliente);
+            System.out.println(pedido);
+            System.out.println(factura);
+        }
+
+
     }
 }
