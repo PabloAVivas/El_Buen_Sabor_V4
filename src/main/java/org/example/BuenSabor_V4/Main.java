@@ -1,8 +1,12 @@
 package org.example.BuenSabor_V4;
 
+import org.example.BuenSabor_V4.DAO.*;
 import org.example.BuenSabor_V4.Entities.*;
 import org.example.BuenSabor_V4.Entities.Enums.*;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
@@ -10,11 +14,16 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+        //Conexion con Base de datos
+        String url = "jdbc:mysql://localhost:3306/javabuensa";
+        String user = "root";
+        String password = "";
+        try (Connection conexion = DriverManager.getConnection(url, user, password)) {
+            System.out.println("✅ ¡Conexión exitosa!");
         // Instancias
 
         // Empresa
         Empresa empresa = Empresa.builder()
-                .id(1L)
                 .nombre("Empresa 1")
                 .razonSocial("SRL")
                 .cuil(1234566)
@@ -22,13 +31,11 @@ public class Main {
 
         // Sucursal
         Sucursal sucursal1 = Sucursal.builder()
-                .id(1L)
                 .nombre("Sucursal 1")
                 .horarioApertura(LocalTime.of(8, 30))
                 .horarioCierre(LocalTime.of(20, 0))
                 .build();
         Sucursal sucursal2 = Sucursal.builder()
-                .id(2L)
                 .nombre("Sucursal 2")
                 .horarioApertura(LocalTime.of(9, 0))
                 .horarioCierre(LocalTime.of(21, 0))
@@ -36,13 +43,11 @@ public class Main {
 
         // Domicilio
         Domicilio domicilio1 = Domicilio.builder()
-                .id(1L)
                 .calle("Calle 1")
                 .numero(123)
                 .cp(4567)
                 .build();
         Domicilio domicilio2 = Domicilio.builder()
-                .id(2L)
                 .calle("Calle 2")
                 .numero(456)
                 .cp(8910)
@@ -50,47 +55,38 @@ public class Main {
 
         // Localidad
         Localidad localidad1 = Localidad.builder()
-                .id(1L)
                 .nombre("Localidad 1")
                 .build();
         Localidad localidad2 = Localidad.builder()
-                .id(2L)
                 .nombre("Localidad 2")
                 .build();
 
         // Provincia
         Provincia provincia1 = Provincia.builder()
-                .id(1L)
                 .nombre("Provincia 1")
                 .build();
         Provincia provincia2 = Provincia.builder()
-                .id(2L)
                 .nombre("Provincia 2")
                 .build();
 
         // País
         Pais pais = Pais.builder()
-                .id(1L)
                 .nombre("Argentina")
                 .build();
 
         // Categorías
         Categoria categoriaPadre = Categoria.builder()
-                .id(1L)
                 .denominacion("Categoría Padre")
                 .build();
         Categoria subCategoria1 = Categoria.builder()
-                .id(2L)
                 .denominacion("Subcategoría 1")
                 .build();
         Categoria subCategoria2 = Categoria.builder()
-                .id(3L)
                 .denominacion("Subcategoría 2")
                 .build();
 
         // Artículos
         ArticuloInsumo insumo1 = ArticuloInsumo.builder()
-                .id(1L)
                 .denominacion("Insumo 1")
                 .precioVenta(100.0)
                 .precioCompra(50.0)
@@ -99,7 +95,6 @@ public class Main {
                 .esParaElaborar(true)
                 .build();
         ArticuloManufacturado manufacturado1 = ArticuloManufacturado.builder()
-                .id(2L)
                 .denominacion("Manufacturado 1")
                 .precioVenta(200.0)
                 .descripcion("Descripción 1")
@@ -109,35 +104,29 @@ public class Main {
 
         //ArticuloManufacturadoDetalle
         ArticuloManufacturadoDetalle detalle1 = ArticuloManufacturadoDetalle.builder()
-                .id(1L)
                 .cantidad(2)
                 .build();
 
         ArticuloManufacturadoDetalle detalle2 = ArticuloManufacturadoDetalle.builder()
-                .id(2L)
                 .cantidad(3)
                 .build();
 
 
         // Unidad de Medida
         UnidadMedida unidadMedida = UnidadMedida.builder()
-                .id(1L)
                 .denominacion("Kilogramos")
                 .build();
 
         // Imagen
         Imagen imagen1 = Imagen.builder()
-                .id(1L)
                 .denominacion("Imagen 1")
                 .build();
         Imagen imagen2 = Imagen.builder()
-                .id(2L)
                 .denominacion("Imagen 2")
                 .build();
 
         // Cliente
         Cliente cliente = Cliente.builder()
-                .id(1L)
                 .nombre("Juan")
                 .apellido("Pérez")
                 .telefono("123456789")
@@ -147,14 +136,12 @@ public class Main {
 
         // Usuario
         Usuario usuario = Usuario.builder()
-                .id(1L)
                 .auth0Id("auth0Id123")
                 .userName("juanperez")
                 .build();
 
         // Pedido
         Pedido pedido = Pedido.builder()
-                .id(1L)
                 .horaEstimadaFinalizacion(LocalTime.of(12, 0))
                 .costo(500.0)
                 .costoTotal(550.0)
@@ -166,7 +153,6 @@ public class Main {
 
         // Factura
         Factura factura = Factura.builder()
-                .id(1L)
                 .fechaFacturacion(LocalDate.now())
                 .mpPaymentId(12345)
                 .mpMerchantOrderId(67890)
@@ -178,7 +164,6 @@ public class Main {
 
         // Detalle de Pedido
         DetallePedido detallePedido = DetallePedido.builder()
-                .id(1L)
                 .cantidad(2)
                 .subTotal(200.0)
                 .build();
@@ -316,6 +301,17 @@ public class Main {
             System.out.println(factura);
         }
 
+        //querys
+            EmpresaDAO empresaDAO = new EmpresaDAO();
+            empresaDAO.save(conexion, empresa);
+
+            SucursalDAO sucursalDAO = new SucursalDAO();
+            sucursalDAO.save(conexion, sucursal1);
+
+        } catch (SQLException e) {
+            System.out.println("❌ Error al conectar a la base de datos.");
+            e.printStackTrace();
+        }
 
     }
 }

@@ -53,7 +53,7 @@ public class Sucursal extends Base{
                 ? promociones.stream()
                 .map(Promocion::getNombre)
                 .collect(Collectors.joining(", "))
-                : "[]"; // O "null" si prefieres indicar que está vacío*/
+                : "[]"; // O "null"*/
 
         return "Sucursal{" +
                 "nombre='" + nombre + '\'' +
